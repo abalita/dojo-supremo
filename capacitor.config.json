@@ -1,0 +1,7 @@
+{
+  "appId": "com.supremo.dojo",
+  "appName": "dojo",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist"
+}
