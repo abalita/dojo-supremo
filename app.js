@@ -4,15 +4,15 @@ const body_parser = require('body-parser')
 const cors = require('cors')
 const helmet = require('helmet')
 const mongoose = require('mongoose')
-var serveStatic = require('serve-static')
+const serveStatic = require('serve-static')
 const PORT = process.env.PORT || 3000
 
 app.use(body_parser.json())
 app.use(cors())
 app.use(helmet())
-
+app.use(serveStatic(__dirname+"/dist"))
 app.use('/members', require('./api/routes/Customer'))
-app.use(serveStatic(`${__dirname}/dist`))
+
 
 /**
  * set up DB
