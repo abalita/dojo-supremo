@@ -1,19 +1,19 @@
 <template>
   <!-- <a-layout style="background-color:black; background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed; background-image:url('https://img1.wsimg.com/isteam/ip/d38db8fe-1a79-4212-975e-8f9f83c189fa/logo_over_black.png/:/cr=t:0%25,l:0%25,w:50%25,h:50%25')"> -->
   <a-layout style="background-color:#161616;">
+    <a-affix :offsetTop="0">
     <a-layout-header style="background-color:#222222">
       <a-row type="flex" justify="start">
         <a-col :span="12">
-          <h2 style="color:white">Customer Information</h2>
-        </a-col>
-        <a-col :span="1" :push="11">
-          <a-button ghost>Help</a-button>
+          <img width="100vh" src="https://img1.wsimg.com/isteam/ip/d38db8fe-1a79-4212-975e-8f9f83c189fa/logo_over_black.png" alt="">
+          <!-- <h2 style="color:white">Customer Information</h2> -->
         </a-col>
       </a-row>
     </a-layout-header>
-    <a-layout-content style="minHeight: 500px; margin-top: 70px">
-      <a-row type="flex">
-        <a-col :span="8" :push="2">
+    </a-affix>
+    <a-layout-content class="content" style="margin-top: 10vh; margin-left: 1vh">
+      <a-row type="flex" :gutter="{sm:8, md:24, lg:32}" justify="center" align="middle">
+        <a-col :xs="20" :sm="20" :md="8">
           <a-card title="Enter the DOJO">
             <a-form>
                 <a-form-item>
@@ -45,7 +45,7 @@
               </a-form>
           </a-card>
         </a-col>
-        <a-col :span="12" :push="4">
+        <a-col :xs="0" :sm="0" :md="12" :lg="12" style="margin-left:60px">
           <img width="400px" src="https://img1.wsimg.com/isteam/ip/d38db8fe-1a79-4212-975e-8f9f83c189fa/logo_over_black.png" alt="">
         </a-col>
       </a-row>
@@ -77,6 +77,11 @@ export default {
 </script>
 
 <style>
+.content {
+height:100vh;
+min-height:100vh;
+
+}
 .footer {
   position: fixed;
   left: 0;

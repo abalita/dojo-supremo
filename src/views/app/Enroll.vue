@@ -1,7 +1,23 @@
 <template>
-  <a-card>
+  <a-card style="margin-bottom: 20vh">
       <a-row type="flex" justify="center">
-          <a-col :span="2">
+        <a-col :xs="0" :sm="0" :md="24" :lg="24" >
+          <a-steps size="small" :current="step_curr">
+          <a-step title="Member Profile"></a-step>
+          <a-step title="Contact Information"></a-step>
+          <a-step title="Membership"></a-step>
+          <a-step title="Payment"></a-step>
+          <a-step title="Confirm"></a-step>
+        </a-steps>
+        <a-divider></a-divider>
+        </a-col>
+        <a-col :xs="24" :sm="24" :md="0" :lg="0" style="margin-top:-3vh">
+          <a-affix :offsetTop="60">
+            <a-progress size="small" :percent="progress" status="exception" :showInfo="false"></a-progress>
+          </a-affix>
+        <a-divider></a-divider>
+        </a-col>
+          <a-col :span="4">
               <a-avatar :size="90" style="font-size:32px; cursor:pointer" @click="takePicture" :src="avatar">
                   <a-icon type="camera" ></a-icon>
             </a-avatar>
@@ -9,23 +25,23 @@
           </a-col>
       </a-row>
       <a-row type="flex" :gutter="16">
-        <a-col :span="12">
+        <a-col :span="24" v-if="step_curr==0">
             
             <!-- <a-form> -->
                  <a-divider orientation="left" style="color:#640E0D">Member Profile</a-divider>
                 <a-card >
                    
-              <a-form-item label="First Name"
+              <a-form-item label="First"
                 :label-col="{ span: 6 }"
                 :wrapper-col="{ span: 18 }">
                 <a-input v-model="customer.first_name" placeholder="Enter First Name"></a-input>
               </a-form-item>
-              <a-form-item label="Middle Name"
+              <a-form-item label="Middle"
                 :label-col="{ span: 6 }"
                 :wrapper-col="{ span: 18 }">
                 <a-input v-model="customer.middle_name" placeholder="Enter Middle Name"></a-input>
               </a-form-item>
-              <a-form-item label="Last Name"
+              <a-form-item label="Last"
                 :label-col="{ span: 6 }"
                 :wrapper-col="{ span: 18 }">
                 <a-input v-model="customer.last_name" placeholder="Enter Last Name"></a-input>
@@ -56,9 +72,9 @@
               </a-form-item>
               </a-card>
             <!-- </a-form> -->
-            
+            <a-divider></a-divider>
         </a-col>
-         <a-col :span="12">
+         <a-col :span="24" v-else-if="step_curr==1">
             <a-divider orientation="left" style="color:#640E0D">Contact Information</a-divider>
             <a-card>
               <a-form-item label="Email Address"
@@ -81,9 +97,10 @@
                 :wrapper-col="{ span: 18 }">
                 <a-textarea v-model="customer.address" :rows="5" placeholder="Enter Address"></a-textarea>
               </a-form-item>              
-            </a-card>            
+            </a-card>  
+            <a-divider></a-divider>          
         </a-col>
-        <a-col :span="24">
+        <a-col :span="24" v-else-if="step_curr==2">
             <a-divider  orientation="left" style="color:#640E0D">Membership Details</a-divider>
             <a-card>
                 <a-form-item label="Enrollment"
@@ -125,17 +142,17 @@
                </a-radio-group>
               </a-form-item>
             </a-card>
-             
+             <a-divider></a-divider>
         </a-col>
-        <a-col :span="24">
+        <a-col :span="24" v-else-if="step_curr==3"> 
             <a-divider  orientation="left" style="color:#640E0D">Payment Details</a-divider>
             <a-card>
-                <a-form-item label="Membership Fee"
+                <a-form-item label="Fee"
                 :label-col="{ span: 6 }"
                 :wrapper-col="{ span: 18 }">
                 <a-input v-model="payment.fee"></a-input>
               </a-form-item>
-              <a-form-item label="Payment Mode"
+              <a-form-item label="Mode"
                 :label-col="{ span: 6 }"
                 :wrapper-col="{ span: 18 }">
                 <a-radio-group v-model="payment.type">
@@ -143,12 +160,12 @@
                    <a-radio value="Installment">Installment</a-radio>
                </a-radio-group>
               </a-form-item>
-               <a-form-item label="Amount Paid"
+               <a-form-item label="Paid"
                 :label-col="{ span: 6 }"
                 :wrapper-col="{ span: 18 }">
                 <a-input v-model="payment.amount_paid"></a-input>
               </a-form-item>
-              <a-form-item label="Remaining Balance"
+              <a-form-item label="Balance"
                 :label-col="{ span: 6 }"
                 :wrapper-col="{ span: 18 }">
                 <a-input v-model="payment.balance"></a-input>
@@ -156,30 +173,58 @@
             </a-card>
               <a-divider></a-divider>
         </a-col>
-        <a-col :push="16" :span="4">           
-            <a-button block @click="$router.push('/app')">Cancel</a-button>
+         <a-col :span="24" v-else-if="step_curr==4"> 
+            <a-divider  orientation="left" style="color:#640E0D">Confirmation</a-divider>
+            <a-card>
+                <template>
+                  <p>The Member hereby agrees to abide by all posted safety guidelines and regulations while using DOJO Supremo's facilities and equipment.
+                      Additionally, the Member agrees to dress and conduct themselves in a manner deemed appropriate for a fitness facility.</p>
+                  <p>The Member shall not consume drugs, alcohol, or tobacco products on DOJO Supremo property.
+                  The Member agrees not to photograph or videotape on DOJO Supremo property.</p>
+                  <p>DOJO Supremo reserves the right to revoke the Member’s access if these terms are violated.</p>
+                </template>
+                <p>Member's Signature:</p>
+                <vue-sign
+                                id="signature"
+                                width="100%"
+                                ref="signaturePad"
+                            />
+            </a-card>
+            <a-divider></a-divider>
         </a-col>
-        <a-col :push="16" :span="4">           
-            <a-button block type="primary" @click="save" :loading="isLoading">Enroll</a-button>
-        </a-col>
-         <!-- <a-col :span="12">
-            <a-divider  orientation="left" style="color:#640E0D">Payment Details</a-divider>
-            <a-card></a-card>
-        </a-col> -->
       </a-row>
+       <a-row type="flex" justify="end" :gutter="16">
+          <a-col :sm="8" :lg="4" v-if="step_curr==0">           
+            <a-button block @click="$router.push('/app')">Cancel</a-button>
+            </a-col>
+            <a-col :sm="8" :lg="4" v-else>           
+                <a-button block @click="step_curr--">Back</a-button>
+            </a-col>
+            <a-col :sm="8" :lg="4" v-if="step_curr==4">           
+                <a-button block type="primary" @click="save" :loading="isLoading">Enroll</a-button>
+            </a-col>
+            <a-col :sm="8"  :lg="4" v-else>           
+                <a-button block type="primary" @click="step_curr++" :loading="isLoading">Next</a-button>
+            </a-col>
+        </a-row>
   </a-card>
 </template>
 
 <script>
+import VueSignature from 'vue-signature-pad'
 import { Plugins, CameraResultType } from '@capacitor/core';
 const { Camera } = Plugins;
 export default {
+  components:{
+        'vue-sign':VueSignature
+    },
     data(){
         return{
             avatar:null,
             customer:{},
             payment:{},
-            isLoading:false
+            isLoading:false,
+            step_curr:0
         }
     },
     methods:{
@@ -223,11 +268,23 @@ export default {
             console.log('imageUrl ::: ', imageUrl)
             this.avatar=imageUrl
         }
+    },
+    computed:{
+      progress(){
+        return ((this.step_curr +1)/5) * 100
+      }
     }
 
 }
 </script>
 
 <style>
-
+#signature {
+  border: double 1px transparent;
+  border-radius: 5px;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, #4bc5e8, #9f6274);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
 </style>
