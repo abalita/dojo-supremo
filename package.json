@@ -21,6 +21,7 @@
     "helmet": "^3.20.0",
     "mongoose": "^5.6.9",
     "register-service-worker": "^1.6.2",
+    "serve-static": "^1.14.1",
     "vue": "^2.6.10",
     "vue-apexcharts": "^1.4.0",
     "vue-router": "^3.0.3",
